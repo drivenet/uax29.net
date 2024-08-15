@@ -41,6 +41,7 @@ internal class Program
 			var lastCat = "";
 			var cats = new Dictionary<string, int>();
 			var catsByRune = new Dictionary<int, string>();
+			var commentsByRune = new Dictionary<int, string>();
 
 			while (true)
 			{
@@ -63,6 +64,7 @@ internal class Program
 				var parts = line.Split(';');
 				var range = parts[0].Trim();
 				var cat = parts[1].Split('#')[0].Trim();
+				var comment =  parts[1].Split('#')[1].Trim();
 
 				if ((typ == "Word" || typ == "Grapheme") && cat.StartsWith("Emoji"))   // may be brittle if data changes
 				{
@@ -102,6 +104,7 @@ internal class Program
 				// Console.WriteLine("Starting range " + range);
 				for (var i = start; i <= end; i++)
 				{
+
 					if (catsByRune.TryGetValue(i, out string? existing))
 					{
 						catsByRune[i] = $"{existing} | {cat}";
@@ -110,6 +113,8 @@ internal class Program
 					{
 						catsByRune.Add(i, cat);
 					}
+
+					_ = commentsByRune.TryAdd(i, comment);
 				}
 			}
 
@@ -165,7 +170,8 @@ internal static partial class {typ}s
 			foreach (var kv in catsByRune)
 			{
 				// codegen the dict
-				dict.WriteLine($"		{{0x{kv.Key:X4}, {kv.Value}}},");
+				commentsByRune.TryGetValue(kv.Key, out string? comment);
+				dict.WriteLine($"		{{0x{kv.Key:X4}, {kv.Value}}},\t\t\t\t\t// {comment}");
 			}
 
 			dict.WriteLine("	};	// end dict");
@@ -186,7 +192,7 @@ internal static partial class {typ}s
 
 			using var reader = new StringReader(data);
 
-			using var dict = new StreamWriter($"../uax29/{typ}s.Test.cs");
+			using var dict = new StreamWriter($"../Tests/{typ}s.Test.cs");
 			dict.WriteLine($"// generated from {url}");
 			dict.Write(@$"namespace Tests;
 
