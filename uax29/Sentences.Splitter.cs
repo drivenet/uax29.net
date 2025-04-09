@@ -264,7 +264,7 @@ internal static partial class Sentences
 				var i = input.Length;
 				while (i > 0)
 				{
-					var _ = Decode.LastRune(input[..i], out Rune rune, out int w);
+					Decode.LastRune(input[..i], out Rune rune, out int w);
 					/*
 					We are not doing anything about invalid runes. The decoders,
 					if I am reading correctly, will return a width regardless,
@@ -314,7 +314,7 @@ internal static partial class Sentences
 				var i = 0;
 				while (i < input.Length)
 				{
-					var _ = Decode.FirstRune(input[i..], out Rune rune, out int w);
+					Decode.FirstRune(input[i..], out Rune rune, out int w);
 					/*
 					We are not doing anything about invalid runes. The decoders,
 					if I am reading correctly, will return a width regardless,

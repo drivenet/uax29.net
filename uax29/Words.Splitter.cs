@@ -46,7 +46,7 @@ internal static partial class Words
 				// https://unicode.org/reports/tr29/#WB1
 				// start of text always advances
 
-				var _ = Decode.FirstRune(input[pos..], out Rune rune, out w);
+				Decode.FirstRune(input[pos..], out Rune rune, out w);
 				/*
                 We are not doing anything about invalid runes. The decoders,
                 if I am reading correctly, will return a width regardless,
@@ -62,7 +62,7 @@ internal static partial class Words
 			// https://unicode.org/reports/tr29/#WB2
 			while (pos < input.Length)
 			{
-				var _ = Decode.FirstRune(input[pos..], out Rune rune, out w);
+				Decode.FirstRune(input[pos..], out Rune rune, out w);
 				/*
                 We are not doing anything about invalid runes. The decoders,
                 if I am reading correctly, will return a width regardless,
@@ -250,7 +250,7 @@ internal static partial class Words
 				var i = 0;
 				while (i < input.Length)
 				{
-					var _ = Decode.FirstRune(input[i..], out Rune rune, out int w);
+					Decode.FirstRune(input[i..], out Rune rune, out int w);
 					/*
                     We are not doing anything about invalid runes. The decoders,
                     if I am reading correctly, will return a width regardless,
