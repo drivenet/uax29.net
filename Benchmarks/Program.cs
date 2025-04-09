@@ -39,11 +39,10 @@ public class Benchmark
 		sampleStream = new MemoryStream(sample);
 	}
 
+	readonly static char[] separators = [' ', '\t', '\n', '\r'];
 	[Benchmark]
 	public void Naive()
 	{
-		char[] separators = new char[] { ' ', '\t', '\n', '\r' };
-
 		var tokenizer = new StringTokenizer(sampleStr, separators);
 		foreach (var token in tokenizer)
 		{
