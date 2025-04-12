@@ -3,12 +3,14 @@ using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using UAX29;
 using Microsoft.Extensions.Primitives;
 BenchmarkRunner.Run<Benchmark>();
 
-[SimpleJob(launchCount: 1, warmupCount: 3, iterationCount: 3)]
+[SimpleJob(RuntimeMoniker.Net80, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net90)]
 [Config(typeof(Config))]
 [MemoryDiagnoser]
 public class Benchmark
