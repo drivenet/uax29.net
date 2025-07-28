@@ -108,6 +108,16 @@ internal static partial class Words
 					continue;
 				}
 
+				// https://unicode.org/reports/tr29/#WB5
+				// https://unicode.org/reports/tr29/#WB8
+				// https://unicode.org/reports/tr29/#WB9
+				// https://unicode.org/reports/tr29/#WB10
+				if (current.Is(Numeric | AHLetter) && lastExIgnore.Is(Numeric | AHLetter))
+				{
+					pos += w;
+					continue;
+				}
+
 				// https://unicode.org/reports/tr29/#WB3d
 				if ((current & last).Is(WSegSpace))
 				{
@@ -122,12 +132,6 @@ internal static partial class Words
 					continue;
 				}
 
-				// https://unicode.org/reports/tr29/#WB5
-				if (current.Is(AHLetter) && lastExIgnore.Is(AHLetter))
-				{
-					pos += w;
-					continue;
-				}
 
 				// https://unicode.org/reports/tr29/#WB6
 				if (current.Is(MidLetter | MidNumLetQ) && lastExIgnore.Is(AHLetter))
@@ -170,14 +174,6 @@ internal static partial class Words
 					continue;
 				}
 
-				// https://unicode.org/reports/tr29/#WB8
-				// https://unicode.org/reports/tr29/#WB9
-				// https://unicode.org/reports/tr29/#WB10
-				if (current.Is(Numeric | AHLetter) && lastExIgnore.Is(Numeric | AHLetter))
-				{
-					pos += w;
-					continue;
-				}
 
 				// https://unicode.org/reports/tr29/#WB11
 				if (current.Is(Numeric) && lastExIgnore.Is(MidNum | MidNumLetQ) && lastLastExIgnore.Is(Numeric))
